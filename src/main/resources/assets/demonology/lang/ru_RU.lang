@@ -1,0 +1,13 @@
+itemGroup.Demonology=Демонология
+
+item.demonology.voodoo_doll.name=Кукла Вуду
+
+tile.demonology.darkness_totem.name=Тотем Тьмы
+
+demonology.information.voodoo=Душа - %d
+
+demonology.message.demon_spawn=Начинается веселье
+demonology.message.start_ritual=Таймер запущен
+demonology.message.totem_day_click=Ритуал проводится только ночью. Твоя жертва была напрасной
+demonology.message.voodoo.not_found_player=В мире нет игрока %d
+demonology.message.dirty_totem_activated=Тотем осквернен несвежей кровью

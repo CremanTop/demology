@@ -1,0 +1,13 @@
+itemGroup.Demonology=Demonology
+
+item.demonology.voodoo_doll.name=Voodoo Doll
+
+tile.demonology.darkness_totem.name=Darkness Totem
+
+demonology.information.voodoo=Soul - %d
+
+demonology.message.demon_spawn=FGFGFGFGFGFG
+demonology.message.start_ritual=HTHTHTHTTHTH
+demonology.message.totem_day_click=The ritual is performed only at night. Your sacrifice was in vain
+demonology.message.voodoo.not_found_player=There is no %d player in the world
+demonology.message.dirty_totem_activated=The totem is defiled with stale blood
