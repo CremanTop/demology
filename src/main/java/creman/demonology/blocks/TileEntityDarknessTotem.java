@@ -30,20 +30,6 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
     private float changeOverTime;
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
-    {
-        tagCompound.setInteger("time", this.time);
-        return super.writeToNBT(tagCompound);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound tagCompound)
-    {
-        this.time = tagCompound.getInteger("time");
-        super.readFromNBT(tagCompound);
-    }
-
-    @Override
     public void update()
     {
         if(this.getTime() > -1)
@@ -96,5 +82,27 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
         voodoo.setTagCompound(nbt);
 
         return voodoo;
+    }
+    
+    // NBT Staff
+    
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldBlockState, IBlockState newBlockState)
+    {
+        return oldBlockState.getBlock() != newBlockState.getBlock();
+    }
+    
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+    {
+        tagCompound.setInteger("time", this.time);
+        return super.writeToNBT(tagCompound);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tagCompound)
+    {
+        super.readFromNBT(tagCompound);
+        this.time = tagCompound.getInteger("time");
     }
 }
