@@ -1,9 +1,7 @@
 package creman.demonology.blocks.utils;
 
-import creman.demonology.blocks.BlockCounter;
 import creman.demonology.blocks.BlockDarknessTotem;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -13,7 +11,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static creman.demonology.blocks.utils.Blocks.BLOCK_COUNTER;
 import static creman.demonology.blocks.utils.Blocks.DARKNESS_TOTEM;
 
 public class BlocksRegister {
@@ -23,7 +20,6 @@ public class BlocksRegister {
         {
             setRegister(block);
         }
-        GameRegistry.registerTileEntity(((BlockCounter) BLOCK_COUNTER).getTileEntityClass(), BLOCK_COUNTER.getRegistryName().toString());
         GameRegistry.registerTileEntity(((BlockDarknessTotem) DARKNESS_TOTEM).getTileEntityClass(), DARKNESS_TOTEM.getRegistryName().toString());
     }
 
@@ -46,7 +42,6 @@ public class BlocksRegister {
         try
         {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
-            // Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
         }
         catch (NullPointerException e)
         {

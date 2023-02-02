@@ -5,23 +5,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
-import java.util.Set;
 
 import static creman.demonology.EventHandler.PLAYERS_EVENT_TOTEM;
+import static creman.demonology.blocks.BlockDarknessTotem.DIRTY;
 import static creman.demonology.items.utils.Items.VOODOO_DOLL;
 
 public class TileEntityDarknessTotem extends TileEntity implements ITickable
@@ -47,10 +38,14 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
 
             for(EntityPlayer player : PLAYERS_EVENT_TOTEM.keySet())
             {
-                PLAYERS_EVENT_TOTEM.get(player).put("red", PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime);
+                PLAYERS_EVENT_TOTEM.get(player).put("red", PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime > 1 ? 1 : PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime);
             }
 
             decrementTime();
+        }
+        if(world.isRainingAt(pos.up()) && world.getBlockState(pos).getValue(DIRTY))
+        {
+            world.setBlockState(pos, world.getBlockState(pos).withProperty(DIRTY, false), 2);
         }
     }
 
@@ -76,22 +71,21 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
     {
         ItemStack voodoo = new ItemStack(VOODOO_DOLL, 1);
 
-        voodoo.setTagCompound(new NBTTagCompound());
-        NBTTagCompound nbt = voodoo.getTagCompound();
+        NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("name", name);
         voodoo.setTagCompound(nbt);
 
         return voodoo;
     }
-    
+
     // NBT Staff
-    
+
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldBlockState, IBlockState newBlockState)
     {
         return oldBlockState.getBlock() != newBlockState.getBlock();
     }
-    
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {

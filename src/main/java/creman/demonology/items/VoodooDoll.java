@@ -68,19 +68,6 @@ public class VoodooDoll extends BaseItem
         return new ActionResult(EnumActionResult.SUCCESS, itemstack);
     }
 
-//    @Override
-//    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
-//    {
-//        super.onCreated(stack, worldIn, playerIn);
-//        if (!stack.hasTagCompound())
-//        {
-//            stack.setTagCompound(new NBTTagCompound());
-//        }
-//        NBTTagCompound nbt = stack.getTagCompound();
-//        if(!nbt.hasKey("name"))nbt.setString("name", playerIn.getName());
-//        stack.setTagCompound(nbt);
-//    }
-
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         if (!stack.hasTagCompound()) return;

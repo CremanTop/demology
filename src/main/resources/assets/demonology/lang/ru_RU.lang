@@ -11,3 +11,6 @@ demonology.message.start_ritual=Таймер запущен
 demonology.message.totem_day_click=Ритуал проводится только ночью. Твоя жертва была напрасной
 demonology.message.voodoo.not_found_player=В мире нет игрока %d
 demonology.message.dirty_totem_activated=Тотем осквернен несвежей кровью
+demonology.message.bad_victim=Отвратительная жертва. Ты хочешь навлечь на себя мой гнев?
+demonology.message.normal_victim=Меня устраивает эта жертва
+demonology.message.good_victim=Хорошая жертва. Я буду к тебе благосклонен
