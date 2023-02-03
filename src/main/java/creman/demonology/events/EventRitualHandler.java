@@ -1,6 +1,9 @@
 package creman.demonology.events;
 
 import creman.demonology.blocks.TileEntityDarknessTotem;
+import creman.demonology.capabilities.CapabilityDemonology;
+import creman.demonology.capabilities.ICapabilityDemonology;
+import creman.demonology.capabilities.SettingInstaller;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityGolem;
@@ -8,6 +11,7 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -16,8 +20,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.HashMap;
 
 import static creman.demonology.blocks.BlockDarknessTotem.DIRTY;
 
@@ -84,17 +86,20 @@ public class EventRitualHandler
                     player.sendMessage(new TextComponentTranslation("demonology.message.bad_victim"));
                 }
 
-                if (!EventFogHandler.PLAYERS_EVENT_TOTEM.containsKey(player))
+                ICapabilityDemonology capability = CapabilityDemonology.get(player);
+                if (!capability.isRitualActive())
                 {
                     ((TileEntityDarknessTotem) tileEntity).setTime(10 * 20);
                     ((TileEntityDarknessTotem) tileEntity).setPlayerName(player.getName());
 
                     player.sendMessage(new TextComponentTranslation("demonology.message.start_ritual"));
 
-                    HashMap<String, Float> map = new HashMap<>();
-                    map.put("red", 0F);
-                    map.put("density", 0.9F);
-                    EventFogHandler.PLAYERS_EVENT_TOTEM.put(player, map);
+                    SettingInstaller.setRitualActive((EntityPlayerMP) player, true);
+                    SettingInstaller.setFogParameter((EntityPlayerMP) player,0, 0.9F);
+                    for(int i = 1; i <= 3; i++)
+                    {
+                        SettingInstaller.setFogParameter((EntityPlayerMP) player, i, 0.0F);
+                    }
                 }
             }
         }

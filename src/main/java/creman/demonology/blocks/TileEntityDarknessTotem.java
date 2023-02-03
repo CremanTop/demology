@@ -1,7 +1,12 @@
 package creman.demonology.blocks;
 
+import creman.demonology.capabilities.CapProvider;
+import creman.demonology.capabilities.CapabilityDemonology;
+import creman.demonology.capabilities.ICapabilityDemonology;
+import creman.demonology.capabilities.SettingInstaller;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-import static creman.demonology.events.EventFogHandler.PLAYERS_EVENT_TOTEM;
 import static creman.demonology.blocks.BlockDarknessTotem.DIRTY;
 import static creman.demonology.items.utils.Items.VOODOO_DOLL;
 
@@ -19,7 +23,7 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
 {
     private int time = -1;
     private float changeOverTime;
-    private String playerEvent;
+    private String playerEvent = null;
 
     @Override
     public void update()
@@ -40,7 +44,7 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
 
             if(player != null)
             {
-                PLAYERS_EVENT_TOTEM.get(player).put("red", PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime > 1 ? 1 : PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime);
+                SettingInstaller.fillFogParameter((EntityPlayerMP) player, 1, changeOverTime);
             }
 
             decrementTime();

@@ -1,5 +1,15 @@
 package creman.demonology.capabilities;
 
+import creman.demonology.network.demon.Dispatcher;
+import creman.demonology.network.demon.common.PacketDemonology;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+
+/**
+ * При создании новых полей здесь необходимо написать для них методы в ICapabilityDemonology и реализовать здесь.
+ * После чего внести соответствующие изменения в CapStorage, CapabilityHandler и, при желании, добавить методы в SettingInstaller.
+ * Далее ОБЯЗАТЕЛЬНО добавить интеграцию через ServerHandlerDemonology, ClientHandlerDemonology и PacketDemonology
+ */
 public class CapabilityDemonology implements ICapabilityDemonology
 {
     private float fogRed = 0.0F;
@@ -7,6 +17,11 @@ public class CapabilityDemonology implements ICapabilityDemonology
     private float fogBlue = 0.0F;
     private float fogDensity = 0.0F;
     private boolean ritualActive = false;
+
+    public static ICapabilityDemonology get(EntityPlayer player)
+    {
+        return player.getCapability(CapProvider.DEMON_CAP, null);
+    }
 
     @Override
     public void setFogParameter(int parameter, float value)
@@ -90,5 +105,11 @@ public class CapabilityDemonology implements ICapabilityDemonology
     {
         if(value >= 1.0F) return 1.0F;
         else return Math.max(value, 0.0F);
+    }
+
+    @Override
+    public void sendToClient(EntityPlayerMP playerMP)
+    {
+        Dispatcher.sendTo(new PacketDemonology(fogRed, fogGreen, fogBlue, fogDensity, ritualActive), playerMP);
     }
 }

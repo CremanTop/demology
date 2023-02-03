@@ -1,5 +1,7 @@
 package creman.demonology.capabilities;
 
+import net.minecraft.entity.player.EntityPlayerMP;
+
 public interface ICapabilityDemonology
 {
     public void setFogParameter(int parameter, float value);
@@ -9,4 +11,5 @@ public interface ICapabilityDemonology
 
     public boolean isRitualActive();
     public void setRitualActive(boolean ritualActive);
+    public void sendToClient(EntityPlayerMP playerMP);
 }

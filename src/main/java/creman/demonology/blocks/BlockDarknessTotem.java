@@ -1,9 +1,12 @@
 package creman.demonology.blocks;
 
-import creman.demonology.events.EventFogHandler;
+import creman.demonology.capabilities.CapProvider;
+import creman.demonology.capabilities.CapabilityDemonology;
+import creman.demonology.capabilities.ICapabilityDemonology;
 import creman.demonology.blocks.utils.BlockTileEntity;
 import creman.demonology.blocks.utils.IOrientableBlock;
 import creman.demonology.blocks.utils.ITransparentBlock;
+import creman.demonology.capabilities.SettingInstaller;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -12,6 +15,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -122,10 +126,11 @@ public class BlockDarknessTotem extends BlockTileEntity<TileEntityDarknessTotem>
 //            if(dayTime < 13000 || dayTime > 23000)
 //            {
                 //playerIn.sendMessage(new TextComponentTranslation("demonology.message.totem_day_click"));
-                if(EventFogHandler.PLAYERS_EVENT_TOTEM.containsKey(playerIn))
-                {
-                    EventFogHandler.PLAYERS_EVENT_TOTEM.remove(playerIn);
-                }
+            ICapabilityDemonology capability = CapabilityDemonology.get(playerIn);
+            if(capability.isRitualActive())
+            {
+                SettingInstaller.setRitualActive((EntityPlayerMP) playerIn, false);
+            }
 //            }
             // playerIn.sendMessage(new TextComponentTranslation("demonology.message.interaction").appendText(" " + itemStack.getDisplayName()));
             return true;
@@ -135,11 +140,19 @@ public class BlockDarknessTotem extends BlockTileEntity<TileEntityDarknessTotem>
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        super.breakBlock(worldIn, pos, state);
-        for(EntityPlayer player : EventFogHandler.PLAYERS_EVENT_TOTEM.keySet())
+        String playerName = ((TileEntityDarknessTotem) worldIn.getTileEntity(pos)).getPlayerName();
+        if(playerName != null)
         {
-            EventFogHandler.PLAYERS_EVENT_TOTEM.remove(player);
+            EntityPlayer player = worldIn.getPlayerEntityByName(playerName);
+            if(player != null)
+            {
+                for(int i = 0; i <= 3; i++)
+                {
+                    SettingInstaller.setFogParameter((EntityPlayerMP) player, i, 0.0F);
+                }
+                SettingInstaller.setRitualActive((EntityPlayerMP) player, false);
+            }
         }
+        super.breakBlock(worldIn, pos, state);
     }
-
 }

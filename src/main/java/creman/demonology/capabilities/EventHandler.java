@@ -19,7 +19,7 @@ public class EventHandler
         if(e.getEntity() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) e.getEntity();
-            ICapabilityDemonology capability = player.getCapability(CapProvider.DEMON_CAP, null);
+            ICapabilityDemonology capability = CapabilityDemonology.get(player);
 
             String message = String.format("Hello there, you have §7%f§r mana left.", capability.getFogParameter(1));
             player.sendMessage(new TextComponentString(message));
@@ -33,9 +33,9 @@ public class EventHandler
 
         if (player.world.isRemote) return;
 
-        ICapabilityDemonology capability = player.getCapability(CapProvider.DEMON_CAP, null);
+        ICapabilityDemonology capability = CapabilityDemonology.get(player);
 
-        capability.fillFogParameter(1, 0.2F);
+        SettingInstaller.fillFogParameter((EntityPlayerMP) player, 1, 0.2F);
 
         String message = String.format("You refreshed yourself in the bed. You received 0.2 mana, you have §7%f§r mana left.", capability.getFogParameter(1));
         player.sendMessage(new TextComponentString(message));
@@ -49,14 +49,14 @@ public class EventHandler
         if (entity.world.isRemote || !(entity instanceof EntityPlayerMP) || event.getDistance() < 3) return;
 
         EntityPlayer player = (EntityPlayer) entity;
-        ICapabilityDemonology capability = player.getCapability(CapProvider.DEMON_CAP, null);
+        ICapabilityDemonology capability = CapabilityDemonology.get(player);
 
         float points = capability.getFogParameter(1);
         float cost = event.getDistance() * 0.1F;
 
         if (points > cost)
         {
-            capability.consumeFogParameter(1, cost);
+            SettingInstaller.consumeFogParameter((EntityPlayerMP) player,1, cost);
 
             String message = String.format("You absorbed fall damage. It costed §7%f§r mana, you have §7%f§r mana left.", cost, capability.getFogParameter(1));
             player.sendMessage(new TextComponentString(message));
@@ -72,9 +72,8 @@ public class EventHandler
     public void onPlayerClone(PlayerEvent.Clone event)
     {
         EntityPlayer player = event.getEntityPlayer();
-        ICapabilityDemonology mana = player.getCapability(CapProvider.DEMON_CAP, null);
         ICapabilityDemonology oldMana = event.getOriginal().getCapability(CapProvider.DEMON_CAP, null);
 
-        mana.setFogParameter(1, oldMana.getFogParameter(1));
+        SettingInstaller.setFogParameter((EntityPlayerMP) player,1, oldMana.getFogParameter(1));
     }
 }

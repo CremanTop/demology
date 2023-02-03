@@ -13,6 +13,7 @@ import creman.demonology.items.utils.Items;
 import creman.demonology.items.utils.ItemsRegister;
 import creman.demonology.mobs.utils.Entities;
 import creman.demonology.mobs.utils.MobsRegister;
+import creman.demonology.network.demon.Dispatcher;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
@@ -38,6 +39,7 @@ public class CommonProxy
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         CapabilityManager.INSTANCE.register(ICapabilityDemonology.class, new CapStorage(), CapabilityDemonology.class);
+        Dispatcher.register();
     }
     public void server(FMLServerStartingEvent e) {
         //e.registerServerCommand(new FogCommand());
@@ -47,5 +49,3 @@ public class CommonProxy
     public void postInit(FMLPostInitializationEvent e) {
     }
 }
-
-
