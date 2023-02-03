@@ -1,6 +1,6 @@
 package creman.demonology.blocks;
 
-import creman.demonology.EventHandler;
+import creman.demonology.events.EventFogHandler;
 import creman.demonology.blocks.utils.BlockTileEntity;
 import creman.demonology.blocks.utils.IOrientableBlock;
 import creman.demonology.blocks.utils.ITransparentBlock;
@@ -122,9 +122,9 @@ public class BlockDarknessTotem extends BlockTileEntity<TileEntityDarknessTotem>
 //            if(dayTime < 13000 || dayTime > 23000)
 //            {
                 //playerIn.sendMessage(new TextComponentTranslation("demonology.message.totem_day_click"));
-                if(EventHandler.PLAYERS_EVENT_TOTEM.containsKey(playerIn))
+                if(EventFogHandler.PLAYERS_EVENT_TOTEM.containsKey(playerIn))
                 {
-                    EventHandler.PLAYERS_EVENT_TOTEM.remove(playerIn);
+                    EventFogHandler.PLAYERS_EVENT_TOTEM.remove(playerIn);
                 }
 //            }
             // playerIn.sendMessage(new TextComponentTranslation("demonology.message.interaction").appendText(" " + itemStack.getDisplayName()));
@@ -136,9 +136,9 @@ public class BlockDarknessTotem extends BlockTileEntity<TileEntityDarknessTotem>
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         super.breakBlock(worldIn, pos, state);
-        for(EntityPlayer player : EventHandler.PLAYERS_EVENT_TOTEM.keySet())
+        for(EntityPlayer player : EventFogHandler.PLAYERS_EVENT_TOTEM.keySet())
         {
-            EventHandler.PLAYERS_EVENT_TOTEM.remove(player);
+            EventFogHandler.PLAYERS_EVENT_TOTEM.remove(player);
         }
     }
 

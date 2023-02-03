@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-import static creman.demonology.EventHandler.PLAYERS_EVENT_TOTEM;
+import static creman.demonology.events.EventFogHandler.PLAYERS_EVENT_TOTEM;
 import static creman.demonology.blocks.BlockDarknessTotem.DIRTY;
 import static creman.demonology.items.utils.Items.VOODOO_DOLL;
 
@@ -19,16 +19,18 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
 {
     private int time = -1;
     private float changeOverTime;
+    private String playerEvent;
 
     @Override
     public void update()
     {
         if(this.getTime() > -1)
         {
+            EntityPlayer player = world.getPlayerEntityByName(playerEvent);
             if(this.getTime() == 0)
             {
                 //Таймер вышел, делаем что-нибудь
-                for(EntityPlayer player : PLAYERS_EVENT_TOTEM.keySet())
+                if(player != null)
                 {
                     player.sendMessage(new TextComponentTranslation("demonology.message.demon_spawn"));
                     ItemStack voodoo = generateVoodooDoll("Creman");
@@ -36,7 +38,7 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
                 }
             }
 
-            for(EntityPlayer player : PLAYERS_EVENT_TOTEM.keySet())
+            if(player != null)
             {
                 PLAYERS_EVENT_TOTEM.get(player).put("red", PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime > 1 ? 1 : PLAYERS_EVENT_TOTEM.get(player).get("red") + changeOverTime);
             }
@@ -61,6 +63,17 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
         this.markDirty();
     }
 
+    public String getPlayerName()
+    {
+        return this.playerEvent;
+    }
+
+    public void setPlayerName(String playerName)
+    {
+        this.playerEvent = playerName;
+        this.markDirty();
+    }
+
     private void decrementTime()
     {
         this.time--;
@@ -73,6 +86,7 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
 
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("name", name);
+        nbt.setBoolean("isInverted", false);
         voodoo.setTagCompound(nbt);
 
         return voodoo;
@@ -90,6 +104,8 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         tagCompound.setInteger("time", this.time);
+        tagCompound.setFloat("changeOverTime", this.changeOverTime);
+        tagCompound.setString("playerEvent", this.playerEvent);
         return super.writeToNBT(tagCompound);
     }
 
@@ -98,5 +114,7 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
     {
         super.readFromNBT(tagCompound);
         this.time = tagCompound.getInteger("time");
+        this.changeOverTime = tagCompound.getFloat("changeOverTime");
+        this.playerEvent = tagCompound.getString("playerEvent");
     }
 }

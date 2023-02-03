@@ -1,10 +1,12 @@
 itemGroup.Demonology=Demonology
 
 item.demonology.voodoo_doll.name=Voodoo Doll
+item.demonology.ancient_fragment.name=§6Fragment Of Ancient Knowledge
 
 tile.demonology.darkness_totem.name=Darkness Totem
 
 demonology.information.voodoo=Soul - %d
+demonology.information.ancient_fragment=Invaluable information about the Secret Arts
 
 demonology.message.demon_spawn=FGFGFGFGFGFG
 demonology.message.start_ritual=HTHTHTHTTHTH
@@ -14,3 +16,4 @@ demonology.message.dirty_totem_activated=The totem is defiled with stale blood
 demonology.message.bad_victim=Bad
 demonology.message.normal_victim=Normal
 demonology.message.good_victim=Good
+demonology.message.golem_victim=This entity has no soul

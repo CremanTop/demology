@@ -1,10 +1,12 @@
 itemGroup.Demonology=Демонология
 
 item.demonology.voodoo_doll.name=Кукла Вуду
+item.demonology.ancient_fragment.name=§6Фрагмент Древних Знаний
 
 tile.demonology.darkness_totem.name=Тотем Тьмы
 
 demonology.information.voodoo=Душа - %d
+demonology.information.ancient_fragment=Бесценная информация о тайных искусствах
 
 demonology.message.demon_spawn=Начинается веселье
 demonology.message.start_ritual=Таймер запущен
@@ -14,3 +16,4 @@ demonology.message.dirty_totem_activated=Тотем осквернен несв�
 demonology.message.bad_victim=Отвратительная жертва. Ты хочешь навлечь на себя мой гнев?
 demonology.message.normal_victim=Меня устраивает эта жертва
 demonology.message.good_victim=Хорошая жертва. Я буду к тебе благосклонен
+demonology.message.golem_victim=Эта сущность не обладает душой

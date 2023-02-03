@@ -1,9 +1,9 @@
-package creman.demonology;
+package creman.demonology.events;
 
 import creman.demonology.blocks.TileEntityDarknessTotem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityVillager;
@@ -14,7 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -22,31 +21,8 @@ import java.util.HashMap;
 
 import static creman.demonology.blocks.BlockDarknessTotem.DIRTY;
 
-public class EventHandler
+public class EventRitualHandler
 {
-    public static HashMap<EntityPlayer, HashMap<String, Float>> PLAYERS_EVENT_TOTEM = new HashMap<>();
-
-    @SubscribeEvent
-    public void fogColor(EntityViewRenderEvent.FogColors e)
-    {
-        if (PLAYERS_EVENT_TOTEM.containsKey(e.getEntity()) && e.getEntity() instanceof EntityPlayer)
-        {
-            e.setRed(PLAYERS_EVENT_TOTEM.get(e.getEntity()).get("red"));
-            e.setGreen(0);
-            e.setBlue(0);
-        }
-    }
-
-    @SubscribeEvent
-    public void fogDensity(EntityViewRenderEvent.FogDensity e)
-    {
-        if (PLAYERS_EVENT_TOTEM.containsKey(e.getEntity()) && e.getEntity() instanceof EntityPlayer)
-        {
-            e.setDensity(PLAYERS_EVENT_TOTEM.get(e.getEntity()).get("density"));
-            e.setCanceled(true);
-        }
-    }
-
     @SubscribeEvent
     public void entityDeath(LivingDeathEvent e)
     {
@@ -63,6 +39,12 @@ public class EventHandler
 
         if (tileEntity instanceof TileEntityDarknessTotem && player != null)
         {
+            if(victim instanceof EntityGolem)
+            {
+                player.sendMessage(new TextComponentTranslation("demonology.message.golem_victim"));
+                return;
+            }
+
             if(world.getBlockState(pos).getValue(DIRTY))
             {
                 player.sendMessage(new TextComponentTranslation("demonology.message.dirty_totem_activated"));
@@ -102,16 +84,17 @@ public class EventHandler
                     player.sendMessage(new TextComponentTranslation("demonology.message.bad_victim"));
                 }
 
-                if (!EventHandler.PLAYERS_EVENT_TOTEM.containsKey(player))
+                if (!EventFogHandler.PLAYERS_EVENT_TOTEM.containsKey(player))
                 {
                     ((TileEntityDarknessTotem) tileEntity).setTime(10 * 20);
+                    ((TileEntityDarknessTotem) tileEntity).setPlayerName(player.getName());
 
                     player.sendMessage(new TextComponentTranslation("demonology.message.start_ritual"));
 
                     HashMap<String, Float> map = new HashMap<>();
                     map.put("red", 0F);
                     map.put("density", 0.9F);
-                    EventHandler.PLAYERS_EVENT_TOTEM.put(player, map);
+                    EventFogHandler.PLAYERS_EVENT_TOTEM.put(player, map);
                 }
             }
         }
