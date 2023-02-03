@@ -4,9 +4,9 @@ import creman.demonology.blocks.utils.Blocks;
 import creman.demonology.blocks.utils.BlocksRegister;
 import creman.demonology.capabilities.CapabilityHandler;
 import creman.demonology.capabilities.EventHandler;
-import creman.demonology.capabilities.IMana;
-import creman.demonology.capabilities.Mana;
-import creman.demonology.capabilities.ManaStorage;
+import creman.demonology.capabilities.ICapabilityDemonology;
+import creman.demonology.capabilities.CapabilityDemonology;
+import creman.demonology.capabilities.CapStorage;
 import creman.demonology.events.EventFogHandler;
 import creman.demonology.events.EventRitualHandler;
 import creman.demonology.items.utils.Items;
@@ -37,7 +37,7 @@ public class CommonProxy
         MinecraftForge.EVENT_BUS.register(new EventRitualHandler());
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new EventHandler());
-        CapabilityManager.INSTANCE.register(IMana.class, new ManaStorage(), Mana.class);
+        CapabilityManager.INSTANCE.register(ICapabilityDemonology.class, new CapStorage(), CapabilityDemonology.class);
     }
     public void server(FMLServerStartingEvent e) {
         //e.registerServerCommand(new FogCommand());

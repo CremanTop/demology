@@ -10,6 +10,7 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
+//Старое, только для примера и тестов
 public class EventHandler
 {
     @SubscribeEvent
@@ -18,9 +19,9 @@ public class EventHandler
         if(e.getEntity() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) e.getEntity();
-            IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
+            ICapabilityDemonology capability = player.getCapability(CapProvider.DEMON_CAP, null);
 
-            String message = String.format("Hello there, you have §7%d§r mana left.", (int) mana.getMana());
+            String message = String.format("Hello there, you have §7%f§r mana left.", capability.getFogParameter(1));
             player.sendMessage(new TextComponentString(message));
         }
     }
@@ -32,11 +33,11 @@ public class EventHandler
 
         if (player.world.isRemote) return;
 
-        IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
+        ICapabilityDemonology capability = player.getCapability(CapProvider.DEMON_CAP, null);
 
-        mana.fill(50);
+        capability.fillFogParameter(1, 0.2F);
 
-        String message = String.format("You refreshed yourself in the bed. You received 50 mana, you have §7%d§r mana left.", (int) mana.getMana());
+        String message = String.format("You refreshed yourself in the bed. You received 0.2 mana, you have §7%f§r mana left.", capability.getFogParameter(1));
         player.sendMessage(new TextComponentString(message));
     }
 
@@ -48,16 +49,16 @@ public class EventHandler
         if (entity.world.isRemote || !(entity instanceof EntityPlayerMP) || event.getDistance() < 3) return;
 
         EntityPlayer player = (EntityPlayer) entity;
-        IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
+        ICapabilityDemonology capability = player.getCapability(CapProvider.DEMON_CAP, null);
 
-        float points = mana.getMana();
-        float cost = event.getDistance() * 2;
+        float points = capability.getFogParameter(1);
+        float cost = event.getDistance() * 0.1F;
 
         if (points > cost)
         {
-            mana.consume(cost);
+            capability.consumeFogParameter(1, cost);
 
-            String message = String.format("You absorbed fall damage. It costed §7%d§r mana, you have §7%d§r mana left.", (int) cost, (int) mana.getMana());
+            String message = String.format("You absorbed fall damage. It costed §7%f§r mana, you have §7%f§r mana left.", cost, capability.getFogParameter(1));
             player.sendMessage(new TextComponentString(message));
 
             event.setCanceled(true);
@@ -71,9 +72,9 @@ public class EventHandler
     public void onPlayerClone(PlayerEvent.Clone event)
     {
         EntityPlayer player = event.getEntityPlayer();
-        IMana mana = player.getCapability(ManaProvider.MANA_CAP, null);
-        IMana oldMana = event.getOriginal().getCapability(ManaProvider.MANA_CAP, null);
+        ICapabilityDemonology mana = player.getCapability(CapProvider.DEMON_CAP, null);
+        ICapabilityDemonology oldMana = event.getOriginal().getCapability(CapProvider.DEMON_CAP, null);
 
-        mana.set(oldMana.getMana());
+        mana.setFogParameter(1, oldMana.getFogParameter(1));
     }
 }
