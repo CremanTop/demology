@@ -77,6 +77,11 @@ public class Messenger extends EntityFlying
         return false;
     }
 
+    public void onUpdate()
+    {
+        this.setHealth(this.getMaxHealth());
+    }
+
     public static class ModelMessenger extends ModelBase
     {
         private final ModelRenderer bone;

@@ -32,7 +32,7 @@ public class CommonProxy
         BlocksRegister.register();
         BlocksRegister.registerRender();
         ItemsRegister.register();
-        Entities.initEntity();
+        Entities.preInitEntity();
         MobsRegister.entitiesRegister();
         MinecraftForge.EVENT_BUS.register(new EventFogHandler());
         MinecraftForge.EVENT_BUS.register(new EventRitualHandler());
@@ -45,6 +45,7 @@ public class CommonProxy
         //e.registerServerCommand(new FogCommand());
     }
     public void init(FMLInitializationEvent e) {
+        Entities.initEntity();
     }
     public void postInit(FMLPostInitializationEvent e) {
     }
