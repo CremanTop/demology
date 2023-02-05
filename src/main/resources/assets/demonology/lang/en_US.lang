@@ -17,3 +17,4 @@ demonology.message.bad_victim=Bad
 demonology.message.normal_victim=Normal
 demonology.message.good_victim=Good
 demonology.message.golem_victim=This entity has no soul
+demonology.message.despawn=I'm leaving

@@ -3,7 +3,7 @@ package creman.demonology.capabilities;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 //Рекомендуется использовать это
-public class SettingInstaller
+public class Setter
 {
     public static void setFogParameter(EntityPlayerMP player, int parameter, float value)
     {

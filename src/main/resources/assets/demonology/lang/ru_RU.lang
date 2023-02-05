@@ -17,3 +17,4 @@ demonology.message.bad_victim=Отвратительная жертва. Ты х
 demonology.message.normal_victim=Меня устраивает эта жертва
 demonology.message.good_victim=Хорошая жертва. Я буду к тебе благосклонен
 demonology.message.golem_victim=Эта сущность не обладает душой
+demonology.message.despawn=Всё, ты не успел, ты опоздал

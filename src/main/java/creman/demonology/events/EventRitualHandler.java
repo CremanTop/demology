@@ -3,7 +3,7 @@ package creman.demonology.events;
 import creman.demonology.blocks.TileEntityDarknessTotem;
 import creman.demonology.capabilities.CapabilityDemonology;
 import creman.demonology.capabilities.ICapabilityDemonology;
-import creman.demonology.capabilities.SettingInstaller;
+import creman.demonology.capabilities.Setter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityGolem;
@@ -94,11 +94,11 @@ public class EventRitualHandler
 
                     player.sendMessage(new TextComponentTranslation("demonology.message.start_ritual"));
 
-                    SettingInstaller.setRitualActive((EntityPlayerMP) player, true);
-                    SettingInstaller.setFogParameter((EntityPlayerMP) player,0, 0.9F);
+                    Setter.setRitualActive((EntityPlayerMP) player, true);
+                    Setter.setFogParameter((EntityPlayerMP) player,0, 0.9F);
                     for(int i = 1; i <= 3; i++)
                     {
-                        SettingInstaller.setFogParameter((EntityPlayerMP) player, i, 0.0F);
+                        Setter.setFogParameter((EntityPlayerMP) player, i, 0.0F);
                     }
                 }
             }

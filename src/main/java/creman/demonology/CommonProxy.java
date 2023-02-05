@@ -11,8 +11,8 @@ import creman.demonology.events.EventFogHandler;
 import creman.demonology.events.EventRitualHandler;
 import creman.demonology.items.utils.Items;
 import creman.demonology.items.utils.ItemsRegister;
-import creman.demonology.mobs.utils.Entities;
-import creman.demonology.mobs.utils.MobsRegister;
+//import creman.demonology.mobs.utils.Entities;
+//import creman.demonology.mobs.utils.MobsRegister;
 import creman.demonology.network.demon.Dispatcher;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -32,8 +32,8 @@ public class CommonProxy
         BlocksRegister.register();
         BlocksRegister.registerRender();
         ItemsRegister.register();
-        Entities.preInitEntity();
-        MobsRegister.entitiesRegister();
+        //Entities.preInitEntity();
+        //MobsRegister.entitiesRegister();
         MinecraftForge.EVENT_BUS.register(new EventFogHandler());
         MinecraftForge.EVENT_BUS.register(new EventRitualHandler());
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
@@ -45,7 +45,7 @@ public class CommonProxy
         //e.registerServerCommand(new FogCommand());
     }
     public void init(FMLInitializationEvent e) {
-        Entities.initEntity();
+        //Entities.initEntity();
     }
     public void postInit(FMLPostInitializationEvent e) {
     }

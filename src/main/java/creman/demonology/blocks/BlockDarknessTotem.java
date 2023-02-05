@@ -1,12 +1,11 @@
 package creman.demonology.blocks;
 
-import creman.demonology.capabilities.CapProvider;
 import creman.demonology.capabilities.CapabilityDemonology;
 import creman.demonology.capabilities.ICapabilityDemonology;
 import creman.demonology.blocks.utils.BlockTileEntity;
 import creman.demonology.blocks.utils.IOrientableBlock;
 import creman.demonology.blocks.utils.ITransparentBlock;
-import creman.demonology.capabilities.SettingInstaller;
+import creman.demonology.capabilities.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -129,7 +128,7 @@ public class BlockDarknessTotem extends BlockTileEntity<TileEntityDarknessTotem>
             ICapabilityDemonology capability = CapabilityDemonology.get(playerIn);
             if(capability.isRitualActive())
             {
-                SettingInstaller.setRitualActive((EntityPlayerMP) playerIn, false);
+                Setter.setRitualActive((EntityPlayerMP) playerIn, false);
             }
 //            }
             // playerIn.sendMessage(new TextComponentTranslation("demonology.message.interaction").appendText(" " + itemStack.getDisplayName()));
@@ -140,17 +139,17 @@ public class BlockDarknessTotem extends BlockTileEntity<TileEntityDarknessTotem>
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        String playerName = ((TileEntityDarknessTotem) worldIn.getTileEntity(pos)).getPlayerName();
+        String playerName = getTileEntity(worldIn, pos).getPlayerName();
         if(playerName != null)
         {
             EntityPlayer player = worldIn.getPlayerEntityByName(playerName);
             if(player != null)
             {
-                for(int i = 0; i <= 3; i++)
+                for (int i = 0; i <= 3; i++)
                 {
-                    SettingInstaller.setFogParameter((EntityPlayerMP) player, i, 0.0F);
+                    Setter.setFogParameter((EntityPlayerMP) player, i, 0.0F);
                 }
-                SettingInstaller.setRitualActive((EntityPlayerMP) player, false);
+                Setter.setRitualActive((EntityPlayerMP) player, false);
             }
         }
         super.breakBlock(worldIn, pos, state);

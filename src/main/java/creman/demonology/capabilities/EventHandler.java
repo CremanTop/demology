@@ -35,7 +35,7 @@ public class EventHandler
 
         ICapabilityDemonology capability = CapabilityDemonology.get(player);
 
-        SettingInstaller.fillFogParameter((EntityPlayerMP) player, 1, 0.2F);
+        Setter.fillFogParameter((EntityPlayerMP) player, 1, 0.2F);
 
         String message = String.format("You refreshed yourself in the bed. You received 0.2 mana, you have §7%f§r mana left.", capability.getFogParameter(1));
         player.sendMessage(new TextComponentString(message));
@@ -56,7 +56,7 @@ public class EventHandler
 
         if (points > cost)
         {
-            SettingInstaller.consumeFogParameter((EntityPlayerMP) player,1, cost);
+            Setter.consumeFogParameter((EntityPlayerMP) player,1, cost);
 
             String message = String.format("You absorbed fall damage. It costed §7%f§r mana, you have §7%f§r mana left.", cost, capability.getFogParameter(1));
             player.sendMessage(new TextComponentString(message));
@@ -74,6 +74,6 @@ public class EventHandler
         EntityPlayer player = event.getEntityPlayer();
         ICapabilityDemonology oldMana = event.getOriginal().getCapability(CapProvider.DEMON_CAP, null);
 
-        SettingInstaller.setFogParameter((EntityPlayerMP) player,1, oldMana.getFogParameter(1));
+        Setter.setFogParameter((EntityPlayerMP) player,1, oldMana.getFogParameter(1));
     }
 }

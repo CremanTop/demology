@@ -1,9 +1,7 @@
 package creman.demonology.blocks;
 
-import creman.demonology.capabilities.CapProvider;
-import creman.demonology.capabilities.CapabilityDemonology;
-import creman.demonology.capabilities.ICapabilityDemonology;
-import creman.demonology.capabilities.SettingInstaller;
+import creman.demonology.capabilities.Setter;
+import creman.demonology.mobs.EntityMessenger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,7 +21,7 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
 {
     private int time = -1;
     private float changeOverTime;
-    private String playerEvent = null;
+    private String playerEvent = "Creman T";
 
     @Override
     public void update()
@@ -36,15 +34,20 @@ public class TileEntityDarknessTotem extends TileEntity implements ITickable
                 //Таймер вышел, делаем что-нибудь
                 if(player != null)
                 {
+                    EntityMessenger demon = new EntityMessenger(this.world);
+                    demon.setLocationAndAngles(getPos().getX() + 0.5F, getPos().getY() + 3, getPos().getZ() + 0.5F, 0.0F, 0.0F);
+                    demon.setTime(5 * 20);
+                    demon.setPlayerName(this.playerEvent);
+                    this.world.spawnEntity(demon);
                     player.sendMessage(new TextComponentTranslation("demonology.message.demon_spawn"));
-                    ItemStack voodoo = generateVoodooDoll("Creman");
-                    InventoryHelper.spawnItemStack(getWorld(), getPos().getX(), getPos().getY() + 3, getPos().getZ(), voodoo);
+                    //ItemStack voodoo = generateVoodooDoll("Creman");
+                    //InventoryHelper.spawnItemStack(getWorld(), getPos().getX(), getPos().getY() + 3, getPos().getZ(), voodoo);
                 }
             }
 
             if(player != null)
             {
-                SettingInstaller.fillFogParameter((EntityPlayerMP) player, 1, changeOverTime);
+                Setter.fillFogParameter((EntityPlayerMP) player, 1, changeOverTime);
             }
 
             decrementTime();

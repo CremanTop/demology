@@ -1,6 +1,6 @@
 package creman.demonology;
 
-import creman.demonology.mobs.EntityRegistry;
+import creman.demonology.mobs.utils.EntityRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -14,12 +14,12 @@ public class ClientProxy extends CommonProxy
     public void preInit(FMLPreInitializationEvent e)
     {
         super.preInit(e);
+        EntityRegistry.initModels();
         //ClientCommandHandler.instance.registerCommand(new FogCommand());
     }
     @Override
     public void init(FMLInitializationEvent e) {
         super.init(e);
-        EntityRegistry.initModels(); ////////////Это типо из тестового
     }
 
     @Override

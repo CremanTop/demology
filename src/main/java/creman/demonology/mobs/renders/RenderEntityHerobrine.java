@@ -1,5 +1,6 @@
-package creman.demonology.mobs;
+package creman.demonology.mobs.renders;
 
+import creman.demonology.mobs.EntitySmallHerobrine;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
@@ -14,7 +15,6 @@ import static creman.demonology.Demonology.MOD_ID;
 
 public class RenderEntityHerobrine extends RenderLiving<EntitySmallHerobrine>
 {
-    /*Расположение текстуры моба(создаём новую папку в текстурах, имя её entity, туда и кладём наши текстуры)*/
     private final ResourceLocation mobTexture = new ResourceLocation(MOD_ID + ":textures/entity/herobrin.png");
 
     /*
@@ -35,7 +35,6 @@ public class RenderEntityHerobrine extends RenderLiving<EntitySmallHerobrine>
     @Nonnull
     protected ResourceLocation getEntityTexture(@Nonnull EntitySmallHerobrine entity)
     {
-        /*Возвращаем текстуру моба*/
         return mobTexture;
     }
 
@@ -44,13 +43,11 @@ public class RenderEntityHerobrine extends RenderLiving<EntitySmallHerobrine>
         return true;
     }
 
-    /*--------->НАШ РЕНДЕР ФЭКТОРИ <---------*/
     public static class Factory implements IRenderFactory<EntitySmallHerobrine>
     {
         @Override
         public Render<? super EntitySmallHerobrine> createRenderFor(RenderManager manager)
         {
-            /*И наконец-то из всего этого создаём рендер*/
             return new RenderEntityHerobrine(manager);
         }
     }

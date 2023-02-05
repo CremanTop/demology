@@ -64,14 +64,4 @@ public class Demonology
     {
         proxy.postInit(event);
     }
-
-    /* EXAMPLE ITEM AND BLOCK - you probably want these in separate files
-    public static class MySpecialItem extends Item {
-
-    }
-
-    public static class MySpecialBlock extends Block {
-
-    }
-    */
 }

@@ -48,8 +48,8 @@ public class CapabilityHandler
 
         for(int i = 0; i <= 3; i++)
         {
-            SettingInstaller.setFogParameter((EntityPlayerMP) player, i, oldCapa.getFogParameter(i));
+            Setter.setFogParameter((EntityPlayerMP) player, i, oldCapa.getFogParameter(i));
         }
-        SettingInstaller.setRitualActive((EntityPlayerMP) player, oldCapa.isRitualActive());
+        Setter.setRitualActive((EntityPlayerMP) player, oldCapa.isRitualActive());
     }
 }
